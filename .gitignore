@@ -5,3 +5,5 @@
 .*.swp
 !example.ods
 !illposed.ods
+!example-output.ods
+!illposed-output.ods
