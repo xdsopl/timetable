@@ -116,6 +116,17 @@ for date, times in examinations:
 		print date, time, possibilities
 '''
 
+undefined = {}
+for candidate, wishing in examinees:
+	without_combination = True
+	for date, times in examinations:
+		for time, possibilities in times:
+			for variable, examinee, examiners in possibilities:
+				if candidate == examinee:
+					without_combination = False
+	if without_combination:
+		undefined[candidate] = ["without combination", wishing]
+
 max_examiners = 0
 date_weights = {}
 for date, times in examinations:
@@ -190,12 +201,11 @@ for date, times in examinations:
 			if variables[variable]:
 				examinees[examinee] = examiners
 
-undefined = {}
 for date, times in examinations:
 	for time, possibilities in times:
 		for variable, examinee, examiners in possibilities:
 			if not examinee in examinees and not examinee in undefined:
-				undefined[examinee] = examiners
+				undefined[examinee] = ["without appointment", examiners]
 
 '''
 for examinee in undefined:
@@ -288,13 +298,13 @@ for examinee in undefined:
 	table.addElement(tr)
 	tc = TableCell(stylename=middle_center)
 	tr.addElement(tc)
-	tc.addElement(P(text="undefined"))
+	tc.addElement(P(text=undefined[examinee][0]))
 	tc = TableCell(stylename=middle_center)
 	tr.addElement(tc)
 	tc = TableCell(stylename=middle_left)
 	tr.addElement(tc)
 	tc.addElement(P(text=examinee))
-	for examiner in homogenize(undefined[examinee]):
+	for examiner in homogenize(undefined[examinee][1]):
 		tc = TableCell(stylename=middle_center)
 		tr.addElement(tc)
 		tc.addElement(P(text=examiner))
