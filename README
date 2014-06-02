@@ -1,0 +1,19 @@
+
+timetable - create timetable from spreadsheet using lpsolve
+Written in 2014 by <Ahmet Inan> <ainan@mathematik.uni-freiburg.de>
+To the extent possible under law, the author(s) have dedicated all copyright and related and neighboring rights to this software to the public domain worldwide. This software is distributed without any warranty.
+You should have received a copy of the CC0 Public Domain Dedication along with this software. If not, see <http://creativecommons.org/publicdomain/zero/1.0/>.
+
+create "example-timetable.ods" from "example.ods":
+# ./timetable.py example.ods
+
+Dependencies:
+Python 2.7:
+https://www.python.org/download/releases/2.7
+odfpy:
+https://pypi.python.org/pypi/odfpy
+https://joinup.ec.europa.eu/software/odfpy/home
+lpsolve:
+http://sourceforge.net/projects/lpsolve/
+http://lpsolve.sourceforge.net/5.5/index.htm
+
