@@ -1,0 +1,7 @@
+*.pdf
+*.ods
+*.xls
+*.lp
+.*.swp
+!example.ods
+!illposed.ods
