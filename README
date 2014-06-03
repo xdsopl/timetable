@@ -17,3 +17,5 @@ lpsolve:
 http://sourceforge.net/projects/lpsolve/
 http://lpsolve.sourceforge.net/5.5/index.htm
 
+Credit goes to Patrick Graf for coming up with the nice idea of using lpsolve to get an "good enough" solution for this timetable problem and for providing an example model to explain it.
+
