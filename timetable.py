@@ -25,6 +25,7 @@ examinees = []
 examinee = ""
 date_rows = True
 repeat_row = 0
+errors = []
 for row in sheet.getElementsByType(TableRow):
 	if not examiners:
 		for cell in row.getElementsByType(TableCell)[1:-1]:
@@ -34,6 +35,7 @@ for row in sheet.getElementsByType(TableRow):
 	pos = 0
 	tmp = []
 	time = ""
+	error = None
 	for cell in row.getElementsByType(TableCell):
 		if not pos:
 			if repeat_row:
@@ -63,20 +65,29 @@ for row in sheet.getElementsByType(TableRow):
 			repeat_cell = int(repeat)
 		else:
 			repeat_cell = 1
-		if unicode(cell) != 'x':
+		if pos <= 1 or unicode(cell) == '':
 			pos += repeat_cell
 			continue
+		elif unicode(cell) != 'x':
+			error = ("Cell %d ('%s') is neither empty nor the string 'x'"
+						% (pos+1, unicode(cell)))
 		while repeat_cell:
 			examiner = examiners[pos-2]
 			tmp += [examiner]
 			repeat_cell -= 1
 			pos += 1
 	if time:
-		times += [[time, tmp]]
-		time = ""
+		if error is None:
+			times += [[time, tmp]]
+			time = ""
+		else:
+			errors.append("Bad input at %s, %s: %s" % (date, time, error))
 	if examinee:
-		examinees += [[examinee, tmp]]
-		examinee = ""
+		if error is None:
+			examinees += [[examinee, tmp]]
+			examinee = ""
+		else:
+			errors.append("Bad input at %s: %s" % (examinee, error))
 
 '''
 for date, times in dates:
@@ -292,6 +303,13 @@ for date, times in examinations:
 
 if number_rows_spanned > 1:
 	first_cell.setAttribute("numberrowsspanned", number_rows_spanned)
+
+for error in errors:
+	tr = TableRow()
+	tc = TableCell()
+	tc.addElement(P(text=error))
+	table.addElement(tr)
+	tr.addElement(tc)
 
 for examinee in undefined:
 	tr = TableRow()
